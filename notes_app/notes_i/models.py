@@ -2,23 +2,37 @@ from django.db import models
 
 
 class Category(models.Model):
-	tittle = models.CharField(max_length=100)
+	tittle = models.CharField(max_length=100, verbose_name='Category')
 
-	def __str__(self):
-		return self.tittle
-
-	class Meta:
-		verbose_name_plural = "Notes"
-
-
-class Notes(models.Model):
-	tittle = models.CharField(max_length=100)
-	text = models.TextField(null=True, blank=True)
-	reminder = models.DateTimeField(null=True)
-	category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null=True)
+	objects = models.Manager()
 
 	class Meta:
+		verbose_name = "Category"
 		verbose_name_plural = "Categories"
 
 	def __str__(self):
 		return self.tittle
+
+	def __repr__(self):
+		return f'Category object: {self.tittle}'
+
+
+class Notes(models.Model):
+	tittle = models.CharField(max_length=100, verbose_name='Note')
+	text = models.TextField(null=True, blank=True)
+	reminder = models.CharField(max_length=100, null=True)
+	create_date = models.DateField(auto_now_add=True, verbose_name='Create date')
+	update_date = models.DateField(auto_now=True, verbose_name='Update date')
+	category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null=True, verbose_name='Category')
+
+	objects = models.Manager()
+
+	class Meta:
+		verbose_name = "Note"
+		verbose_name_plural = "Notes"
+
+	def __str__(self):
+		return self.tittle
+
+	def __repr__(self):
+		return f'Note object: {self.tittle}'
