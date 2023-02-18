@@ -34,11 +34,8 @@ def update_note(request, note_id):
 
 
 def delete_note(request, note_id):
-	if request.method == "POST":
-		instance = get_object_or_404(Notes, id=note_id)
-		instance.delete()
-		return HttpResponseRedirect('/')
-	else:
-		form = CreateNoteForm()
-	context = {'form': form}
-	return render(request, 'create_note.html', context=context)
+	instance = get_object_or_404(Notes, id=note_id)
+	instance.delete()
+	return HttpResponseRedirect('/')
+
+

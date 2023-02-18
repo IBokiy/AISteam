@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from .models import Notes, Category
 from .forms import CreateNoteForm, UpdateNoteForm
-
+import time
 
 class NotesAppTest(TestCase):
 	@staticmethod
@@ -75,6 +75,7 @@ class NotesAppTest(TestCase):
 		test_note = self.create_note()
 		url = reverse(viewname='delete_note', args=[test_note.id])
 		resp = self.client.get(url)
+		print(resp.status_code)
 		self.assertEqual(resp.status_code, 302)
 
 	def test_note_forms(self):
