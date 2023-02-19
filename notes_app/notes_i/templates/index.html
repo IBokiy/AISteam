@@ -1,5 +1,6 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
+{% load crispy_forms_tags %}
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -16,8 +17,10 @@
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" ><b>My Notes</b></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -27,10 +30,13 @@
                     <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/create-note/">Create new note</a>
                     </li>
+                    <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/login/">Login</a>
+                    </li>
                 </ul>
                 <form class="d-flex" role="search" action="/search/">
                     <input class="form-control me-2" type="text" name="query" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-dark" type="submit">Search</button>
                 </form>
                 </div>
             </div>
@@ -39,14 +45,16 @@
         <main>
             {% block content%}
             <div class="container">
-                    <div>
-                        <form method="get">
-                        {{ results.form }}
-                        <button class="btn btn-outline-success" type="submit">Filter</button>
-                        </form>
-                    </div>
-                    {% for n in results.qs %}
-                       <div class="card text">
+                <div class="container">
+                    <form method="get">
+                    {{  results.form | crispy }}
+                    <button class="btn btn-outline-dark btn-sm" type="submit">Filter</button>
+                    </form>
+                </div>
+                <br>
+                    <div class="container">
+                        {% for n in results.qs %}
+                        <div class="card text">
                             <div class="card-header">
                                 <b>{{n.tittle}}</b>
                             </div>
@@ -58,10 +66,12 @@
                                 {% if n.reminder %}
                                     <p class="card-text">Reminder: {{n.reminder}}</p>
                                 {% endif %}
-                                <a href="update-note/{{n.id}}" class="btn btn-outline-success">Update note</a>
+                                <a href="update-note/{{n.id}}" class="btn btn-outline-dark btn-sm">Update note</a>
                             </div>
                         </div>
-                    {% endfor %}
+                         <br>
+                        {% endfor %}
+                    </div>
             </div>
             {% endblock %}
         </main>
@@ -70,75 +80,80 @@
                 crossorigin="anonymous"></script>
     </body>
 
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-
 <footer class="footer_area section_padding_130_0">
-      <div class="container">
+    <div class="container">
         <div class="row">
-          <!-- Single Widget-->
-          <div class="col-12 col-sm-6 col-lg-4">
-            <div class="single-footer-widget section_padding_0_130">
-              <!-- Footer Logo-->
-              <div class="footer-logo mb-3"></div>
-              <p></p>
-              <!-- Copywrite Text-->
-              <div class="copywrite-text mb-5">
-                <p class="mb-0"> <i class="lni-heart mr-1"></i><a class="ml-1" href="https://wrapbootstrap.com/user/DesigningWorld"></a></p>
-              </div>
-              <!-- Footer Social Area-->
-              <div class="footer_social_area"><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook"><i class="fa fa-facebook"></i></a><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pinterest"><i class="fa fa-pinterest"></i></a><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Skype"><i class="fa fa-skype"></i></a><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></div>
+            <!-- Single Widget-->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-footer-widget section_padding_0_130">
+                    <!-- Footer Logo-->
+                    <div class="footer-logo mb-3"></div>
+                    <p></p>
+                    <!-- Copywrite Text-->
+                    <div class="copywrite-text mb-5">
+                        <p class="mb-0"> <i class="lni-heart mr-1"></i><a
+                           class="ml-1" href="https://wrapbootstrap.com/user/DesigningWorld"></a></p>
+                    </div>
+                    <!-- Footer Social Area-->
+                    <div class="footer_social_area"><a href="#" data-toggle="tooltip" data-placement="top"
+                         title="" data-original-title="Facebook"><i class="fa fa-facebook"></i></a><a href="#"
+                         data-toggle="tooltip" data-placement="top" title="" data-original-title="Pinterest"><i
+                         class="fa fa-pinterest"></i></a><a href="#" data-toggle="tooltip" data-placement="top"
+                         title="" data-original-title="Skype"><i class="fa fa-skype"></i></a><a href="#"
+                         data-toggle="tooltip" data-placement="top" title=""
+                         data-original-title="Twitter"><i class="fa fa-twitter"></i></a></div>
+                </div>
             </div>
-          </div>
-          <!-- Single Widget-->
-          <div class="col-12 col-sm-6 col-lg">
-            <div class="single-footer-widget section_padding_0_130">
-              <!-- Widget Title-->
-              <h5 class="widget-title">About</h5>
-              <!-- Footer Menu-->
-              <div class="footer_menu">
-                <ul>
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Corporate Sale</a></li>
-                  <li><a href="#">Terms &amp; Policy</a></li>
-                  <li><a href="#">Community</a></li>
-                </ul>
-              </div>
+            <!-- Single Widget-->
+            <div class="col-12 col-sm-6 col-lg">
+                <div class="single-footer-widget section_padding_0_130">
+                    <!-- Widget Title-->
+                    <h5 class="widget-title">About</h5>
+                    <!-- Footer Menu-->
+                    <div class="footer_menu">
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Corporate Sale</a></li>
+                            <li><a href="#">Terms &amp; Policy</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
-          <!-- Single Widget-->
-          <div class="col-12 col-sm-6 col-lg">
-            <div class="single-footer-widget section_padding_0_130">
-              <!-- Widget Title-->
-              <h5 class="widget-title">Support</h5>
-              <!-- Footer Menu-->
-              <div class="footer_menu">
-                <ul>
-                  <li><a href="#">Help</a></li>
-                  <li><a href="#">Support</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="#">Term &amp; Conditions</a></li>
-                  <li><a href="#">Help &amp; Support</a></li>
-                </ul>
-              </div>
+            <!-- Single Widget-->
+            <div class="col-12 col-sm-6 col-lg">
+                <div class="single-footer-widget section_padding_0_130">
+                    <!-- Widget Title-->
+                    <h5 class="widget-title">Support</h5>
+                    <!-- Footer Menu-->
+                    <div class="footer_menu">
+                        <ul>
+                            <li><a href="#">Help</a></li>
+                            <li><a href="#">Support</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Term &amp; Conditions</a></li>
+                            <li><a href="#">Help &amp; Support</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
-          <!-- Single Widget-->
-          <div class="col-12 col-sm-6 col-lg">
-            <div class="single-footer-widget section_padding_0_130">
-              <!-- Widget Title-->
-              <h5 class="widget-title">Contact</h5>
-              <!-- Footer Menu-->
-              <div class="footer_menu">
-                <ul>
-                  <li><a href="#">Call Centre</a></li>
-                  <li><a href="#">Email Us</a></li>
-                  <li><a href="#">Term &amp; Conditions</a></li>
-                  <li><a href="#">Help Center</a></li>
-                </ul>
-              </div>
+            <!-- Single Widget-->
+            <div class="col-12 col-sm-6 col-lg">
+                <div class="single-footer-widget section_padding_0_130">
+                    <!-- Widget Title-->
+                    <h5 class="widget-title">Contact</h5>
+                    <!-- Footer Menu-->
+                    <div class="footer_menu">
+                        <ul>
+                          <li><a href="#">Call Centre</a></li>
+                          <li><a href="#">Email Us</a></li>
+                          <li><a href="#">Term &amp; Conditions</a></li>
+                          <li><a href="#">Help Center</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
 </footer>
 </html>
