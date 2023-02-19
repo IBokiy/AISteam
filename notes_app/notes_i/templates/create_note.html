@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create Note</title>
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
 
-</head>
-<body>
-
-    <form action="/create-note/" method="post">
+{% block content %}
+<div class="container">
+        <form action="/create-note/" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Create">
+        {% crispy form %}
     </form>
-
-</body>
-</html>
+</div>
+{% endblock %}

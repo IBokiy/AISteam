@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Update</title>
-</head>
-<body>
-  <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <input type="submit" value="Update">
-      <input formaction="{% url 'delete_note' note_id=form.instance.id %}" type="submit" value="Delete">
-  </form>
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
 
-</body>
-</html>
+{% block content%}
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
+</div>
+{% endblock %}

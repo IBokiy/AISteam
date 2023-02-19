@@ -2,16 +2,17 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Notes
 from .forms import CreateNoteForm, UpdateNoteForm
+from .filters import NotesFilter
 
 
 def index(request) -> HttpResponse:
 	notes = Notes.objects.all()
-	context = {'notes': notes}
+	results = NotesFilter(request.GET, queryset=notes)
+	context = {'notes': notes, 'results': results}
 	return render(request, 'index.html', context=context)
 
 
 def create_note(request):
-
 	if request.method == "POST":
 		form = CreateNoteForm(request.POST)
 		if form.is_valid():
@@ -39,3 +40,8 @@ def delete_note(request, note_id):
 	return HttpResponseRedirect('/')
 
 
+def search(request):
+	query = request.GET.get('query')
+	notes_filtered = Notes.objects.filter(tittle__icontains=query)
+	context = {'results': notes_filtered}
+	return render(request, 'search.html', context=context)

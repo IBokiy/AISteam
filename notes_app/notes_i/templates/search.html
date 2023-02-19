@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  {% if results %}
+    <h3>Search results:</h3>
+        {% for result in results %}
+          <div>
+            <h3>{{result.tittle}}</h3>
+            <p>{{result.text}}</p>
+            <a href="update-note/{{results.id}}">Update note</a>
+          </div>
+        {% endfor %}
+  {% else %}
+        <p>Not found</p>
+        {% endif %}
+{% endblock %}

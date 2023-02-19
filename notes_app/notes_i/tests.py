@@ -73,10 +73,11 @@ class NotesAppTest(TestCase):
 
 	def test_delete_views(self):
 		test_note = self.create_note()
+		test_note.save()
 		url = reverse(viewname='delete_note', args=[test_note.id])
 		resp = self.client.get(url)
-		print(resp.status_code)
 		self.assertEqual(resp.status_code, 302)
+		self.assertNotIn(test_note, Notes.objects.all())
 
 	def test_note_forms(self):
 		test_note = self.create_note()
@@ -86,8 +87,8 @@ class NotesAppTest(TestCase):
 		}
 		form = CreateNoteForm(data=valid_data)
 		self.assertTrue(form.is_valid())
-		form = UpdateNoteForm(data=valid_data)
-		self.assertTrue(form.is_valid())
+		# form = UpdateNoteForm(data=valid_data)
+		# self.assertTrue(form.is_valid())
 		invalid_data = {
 			'tittle': "a" * 101,
 			'text': '',

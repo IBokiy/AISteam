@@ -1,4 +1,8 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit, Button, HTML
 from django import forms
+from django.urls import reverse
+
 from .models import Notes
 
 
@@ -9,9 +13,10 @@ class DateInput(forms.DateInput):
 
 class CreateNoteForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
-		super(CreateNoteForm, self).__init__(*args, **kwargs)
-		self.fields['reminder'].required = False
-		self.fields['category'].required = False
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+
+		self.helper.add_input(Submit('submit', 'Create'))
 
 	class Meta:
 		model = Notes
@@ -20,7 +25,7 @@ class CreateNoteForm(forms.ModelForm):
 			'text',
 			'reminder',
 			'category',
-			]
+		]
 
 		widgets = {
 			'reminder': DateInput
@@ -29,18 +34,23 @@ class CreateNoteForm(forms.ModelForm):
 
 class UpdateNoteForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
-		super(UpdateNoteForm, self).__init__(*args, **kwargs)
-		self.fields['reminder'].required = False
-		self.fields['category'].required = False
+		super().__init__(*args, **kwargs)
+		self.url = reverse("delete_note", args=[self.instance.id])
+		self.helper = FormHelper()
+		self.helper.add_input(Submit('submit', 'Update')),
+		self.helper.add_input(Button(
+			'delete',
+			'Delete',
+			onclick='window.location.href="{}"'.format(self.url)))
 
 	class Meta:
 		model = Notes
 		fields = [
-				  'tittle',
-				  'text',
-				  'reminder',
-				  'category'
-				  ]
+			'tittle',
+			'text',
+			'reminder',
+			'category',
+		]
 
 		widgets = {
 			'reminder': DateInput
