@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <p>Have have an account? Login <a href="{% url 'login' %}">Here</a>.</p>
+        <button type="submit" class="btn btn-dark">Register</button>
+    </form>
+</div>
+<br>
+{% endblock %}
