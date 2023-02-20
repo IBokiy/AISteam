@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -24,6 +25,7 @@ class Notes(models.Model):
 	create_date = models.DateField(auto_now_add=True, verbose_name='Create date')
 	update_date = models.DateField(auto_now=True, verbose_name='Update date')
 	category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null=True, verbose_name='Category', blank=True)
+	author = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False, default=1)
 
 	objects = models.Manager()
 
