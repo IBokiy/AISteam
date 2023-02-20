@@ -25,7 +25,7 @@ def create_note(request):
 			note = form.save(commit=False)
 			note.author = request.user
 			note.save()
-		return HttpResponseRedirect('/')
+			return HttpResponseRedirect('/')
 	else:
 		form = CreateNoteForm()
 	context = {'form': form}
